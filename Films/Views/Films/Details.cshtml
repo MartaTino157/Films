@@ -1,0 +1,31 @@
+﻿@model Films.Models.Actor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Актеры</h2>
+
+<div class="row">
+    <h4>Актер - @Html.DisplayFor(model => model.Firstname) @Html.DisplayFor(model => model.Lastname)</h4>
+    <div class="col-md-3">
+        @if (Model.Photo != null)
+            {
+            <img src="@Url.Action("GetImage", new { Model.Id})" class="image" />
+        }
+    </div>
+    <div class="col-md-9">
+        <h4>Фильмография: </h4>
+        <ul>
+            @foreach (var item in Model.FilmActors)
+            {
+                <li>@item.Film.Title</li>
+            }
+        </ul>
+    </div>
+</div>
+<br />
+<p>
+    @Html.ActionLink("К списку фильмов", "MyFilms","Films", new { @class = "btn btn-default" })
+</p>
+

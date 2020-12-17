@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Films.Models.Film>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Менеджер фильмов</h2>
+
+<p>
+    @Html.ActionLink("Добавить новый", "Create")
+</p>
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+
+            @if (item.Cover != null)
+            {
+                <img src="~/Content/Images/@Html.DisplayFor(modelItem => item.Cover)" class="image" />
+            }
+            <br /><br />
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-default" })
+            </p>
+        </div>
+    }
+</div>
+

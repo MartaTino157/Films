@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Films.Models.Film>
+
+@{
+    ViewBag.Title = "FilmSearch";
+}
+
+<h2>Найденные фильмы по запросу: "@Model.First().Country"</h2>
+
+@foreach (var item in Model)
+{
+    <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+    <p><b>Год выхода: </b>@Html.DisplayFor(modelItem => item.Year)</p>
+    <p><b>Страна: </b>@Html.DisplayFor(modelItem => item.Country)</p>
+}
+<p>
+    @Html.ActionLink("Назад", "Films", "Films", new { @class = "btn btn-default" })
+</p>

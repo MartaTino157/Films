@@ -1,0 +1,40 @@
+﻿@model PagedList.IPagedList<Films.Models.Film>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Films";
+}
+
+<h2>Фильмы</h2>
+
+<div class="container body-content" >
+    <div style="margin-top:30px; margin-bottom:30px;">
+        Найти фильм по стране:
+        @using (Ajax.BeginForm("FilmSearch", "Films", new AjaxOptions { UpdateTargetId = "results" }))
+        {
+           <input type="text" name="Country" placeholder="Введите страну" />
+           <input type="submit" value="Искать" />
+        }
+    </div>
+</div>
+
+
+@foreach (var item in Model)
+{
+    <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+    <p><b>Год выхода: </b>@Html.DisplayFor(modelItem => item.Year)</p>
+    <p><b>Страна: </b>@Html.DisplayFor(modelItem => item.Country)</p>
+    <h4>Актеры: </h4>
+    <ul>
+        @foreach (var task in item.FilmActors)
+        {
+            <li>@task.Actor.Firstname @task.Actor.Lastname</li>
+        }
+    </ul>
+}
+<br />
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Films", new { page }))
+

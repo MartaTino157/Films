@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Films.Models.FilmActor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Фильм
+        </th>
+        <th>
+            Актер
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Film.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Actor.Firstname) @Html.DisplayFor(modelItem => item.Actor.Lastname)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

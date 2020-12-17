@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Films.Models.Actor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Менеджер актеров</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            @if (item.Photo != null)
+            {
+            <img src="@Url.Action("GetImage", new { item.Id})" class="image" />
+            }
+            <h4>@Html.DisplayFor(modelItem => item.Firstname) @Html.DisplayFor(modelItem => item.Lastname)</h4>
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </p>
+        </div>
+        
+    }
+</div>
+

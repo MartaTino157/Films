@@ -1,0 +1,35 @@
+﻿@model Films.Models.Film
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Детали</h2>
+
+<div class="row">
+    <h3>@Html.DisplayFor(model => model.Title)</h3>
+    <div class="col-md-3">
+        @if (Model.Cover != null)
+            {
+            <img src="~/Content/Images/@Html.DisplayFor(model => model.Cover)" class="image" />
+        }
+    </div>
+    <div class="col-md-8">
+        <h4>Описание: </h4>
+        <p>@Html.DisplayFor(model => model.Description)</p>
+        <p><b>Год выхода: </b>@Html.DisplayFor(model => model.Year)</p>
+        <p><b>Страна: </b>@Html.DisplayFor(model => model.Country)</p>
+        <h4>Актеры: </h4>
+        <ul class="list-inline">
+            @foreach (var task in Model.FilmActors)
+            {
+                <li>@Html.ActionLink(@task.Actor.Firstname + @task.Actor.Lastname + " ", "Details", new { id = task.Actor.Id })</li>
+            }
+        </ul>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Назад", "Index", "FilmsAction", new { @class="btn btn-default"})
+    </p>
+</div>
+    

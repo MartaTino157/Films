@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FilmsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Actor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="PhotoType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FilmActors" Relationship="Self.CK_FilmActor_Actor" FromRole="Actor" ToRole="FilmActor" />
+  </EntityType>
+  <EntityType Name="Film">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Cover" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="FilmActors" Relationship="Self.CK_FilmActor_Film" FromRole="Film" ToRole="FilmActor" />
+  </EntityType>
+  <EntityType Name="FilmActor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FilmId" Type="Int32" Nullable="false" />
+    <Property Name="ActorId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Actor" Relationship="Self.CK_FilmActor_Actor" FromRole="FilmActor" ToRole="Actor" />
+    <NavigationProperty Name="Film" Relationship="Self.CK_FilmActor_Film" FromRole="FilmActor" ToRole="Film" />
+  </EntityType>
+  <Association Name="CK_FilmActor_Actor">
+    <End Role="Actor" Type="Self.Actor" Multiplicity="1" />
+    <End Role="FilmActor" Type="Self.FilmActor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FilmActor">
+        <PropertyRef Name="ActorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CK_FilmActor_Film">
+    <End Role="Film" Type="Self.Film" Multiplicity="1" />
+    <End Role="FilmActor" Type="Self.FilmActor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FilmActor">
+        <PropertyRef Name="FilmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FilmsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Actors" EntityType="Self.Actor" />
+    <EntitySet Name="Films" EntityType="Self.Film" />
+    <EntitySet Name="FilmActors" EntityType="Self.FilmActor" />
+    <AssociationSet Name="CK_FilmActor_Actor" Association="Self.CK_FilmActor_Actor">
+      <End Role="Actor" EntitySet="Actors" />
+      <End Role="FilmActor" EntitySet="FilmActors" />
+    </AssociationSet>
+    <AssociationSet Name="CK_FilmActor_Film" Association="Self.CK_FilmActor_Film">
+      <End Role="Film" EntitySet="Films" />
+      <End Role="FilmActor" EntitySet="FilmActors" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
